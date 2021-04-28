@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+
+  &__list {
+    display: flex;
+    list-style-type: none;
+
+    &--item {
+      padding: 0 10px;
+      font-size: 14px;
+    }
+  }
+}
+
+.social-icon {
+  font-size: 20px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+// .active {
+//   color: #000;
+//   border-bottom: 1px solid red;
+//   // margin: 0 10px;
+// }
