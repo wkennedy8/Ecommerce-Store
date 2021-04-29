@@ -30,78 +30,58 @@ export const ContextProvider = ({ children }) => {
     setCurrentUser(data);
   };
 
+  const getCart = async () => {
+    const { data } = await axios.get('/api/cart', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    setShoppingCart(data);
+  };
+
   useEffect(() => {
     getCategories();
     getProducts();
 
     if (token && !currentUser) {
       getCurrentUser();
+      getCart();
     }
+
     // eslint-disable-next-line
   }, []);
 
-  const handleUpdateCart = async (product) => {
-    //get cart from sessionStorage and parse into an object
-    const cart = JSON.parse(sessionStorage.getItem('cart'));
-    //if there is a cart do the following
-    if (cart) {
-      //Find out if the cart contains the product passed to the function
-      const currentItemInCart = cart[product._id];
-      //if the product passed is currently not in the cart
-      if (!currentItemInCart) {
-        //add it to the cart
-        const updatedCart = {
-          ...cart,
-          [product._id]: { count: 1, product }
-        };
-        //update the state....(not necessary)
-        setShoppingCart(updatedCart);
-        //update the cart is sessionStorage
-        return sessionStorage.setItem('cart', JSON.stringify(updatedCart));
-      }
-      //if the product IS currently in the cart
-      //update the count
-      const updatedCartQty = {
-        ...cart,
-        [product._id]: { count: currentItemInCart.count + 1, product }
-      };
-      //update the state
-      setShoppingCart(updatedCartQty);
-      //update the cart in sessionStorage
-      return sessionStorage.setItem('cart', JSON.stringify(updatedCartQty));
-    } else {
-      const newCart = {
-        ...shoppingCart,
-        [product._id]: { count: 1, product }
-      };
-      setShoppingCart(newCart);
-      return sessionStorage.setItem('cart', JSON.stringify(newCart));
+  const handleUpdateCart = async (product, quantity) => {
+    try {
+      const { data } = await axios.post(
+        '/api/cart',
+        { product, quantity },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      setShoppingCart(data);
+    } catch (error) {
+      console.log('ERROR: ', error.message);
     }
   };
 
-  const decrementUpdateCart = (product) => {
-    //get cart from sessionStorage
-    const cart = JSON.parse(sessionStorage.getItem('cart'));
-    //check if product is currently in cart
-    let currentItemInCart = cart[product._id];
-
-    //if count of product in cart is 1, remove it
-    if (currentItemInCart.count === 1) {
-      currentItemInCart = {
-        ...cart,
-        [product._id]: { count: 0, product }
-      };
-      delete currentItemInCart[product._id];
-      setShoppingCart(currentItemInCart);
-      return sessionStorage.setItem('cart', JSON.stringify(currentItemInCart));
-    }
-    if (currentItemInCart) {
-      const updatedCart = {
-        ...cart,
-        [product._id]: { count: currentItemInCart.count - 1, product }
-      };
-      setShoppingCart(updatedCart);
-      return sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+  const decrementUpdateCart = async (product, cartId) => {
+    try {
+      const { data } = await axios.put(
+        `/api/cart/${cartId}`,
+        { product },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      setShoppingCart(data);
+    } catch (error) {
+      console.log('ERROR: ', error.message);
     }
   };
 

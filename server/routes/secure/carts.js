@@ -3,56 +3,116 @@ const Cart = require('../../db/models/cart');
 
 //create/update a cart
 router.post('/', async (req, res) => {
-  try {
-    const { product } = req.body;
-    const { remove } = req.body;
-    //check if cart exists
-    const existingCart = await Cart.findOne({
-      userId: req.user._id,
-      open: true
-    });
-    //if cart exists add product to cart
-    if (existingCart && !remove) {
-      //check if product is already in cart
-      if (existingCart.products.includes(product._id)) {
-        existingCart.count = existingCart.count + 1;
-        existingCart.total = existingCart.count * existingCart.total;
-        await existingCart.save();
-        await existingCart.populate('products').execPopulate();
-        return res.status(200).json(existingCart);
+  const { product, quantity } = req.body;
+
+  //check if cart exists
+  const existingCart = await Cart.findOne({ userId: req.user._id });
+  if (existingCart) {
+    //check if item is inside the products array
+    let itemIndex = existingCart.products.findIndex(
+      (p) => p.productId == product._id
+    );
+    if (itemIndex > -1) {
+      //select the product in the products array via the index position
+      let productItem = existingCart.products[itemIndex];
+      //update the price
+      productItem.price = Number(productItem.price) + Number(product.price);
+      //update the quantity
+      productItem.quantity = Number(productItem.quantity) + Number(quantity);
+      //update the product item in the products array
+      existingCart.products[itemIndex] = productItem;
+      //update the cartQuantity
+      existingCart.cartQuantity =
+        Number(existingCart.cartQuantity) + Number(quantity);
+    } else {
+      //product does not exists in cart, add new item
+      existingCart.products.push({
+        productId: product._id,
+        quantity,
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        image: product.image
+      });
+      //update the cartQuantity
+      existingCart.cartQuantity =
+        Number(existingCart.cartQuantity) + Number(quantity);
+    }
+    //update the total for the cart
+    //get array of just product prices
+    const productPriceArray = existingCart.products.map(
+      (product) => product.price
+    );
+    //calculate the sum
+    existingCart.total = productPriceArray.reduce((accumulator, currValue) => {
+      return accumulator + currValue;
+    }, 0);
+    await existingCart.save();
+    return res.status(201).send(existingCart);
+  }
+
+  //If NO existing cart
+  const { name, description, image, price, _id } = product;
+  const newCart = new Cart({
+    userId: req.user._id,
+    products: { productId: _id, name, description, image, price, quantity },
+    cartQuantity: quantity,
+    total: price
+  });
+  await newCart.save();
+  return res.status(200).json(newCart);
+});
+
+router.put('/:id', async (req, res) => {
+  const { product } = req.body;
+
+  const cart = await Cart.findOne({ userId: req.user._id, _id: req.params.id });
+  if (cart) {
+    //find the product
+    let itemIndex = cart.products.findIndex((p) => p.productId == product._id);
+    if (itemIndex > -1) {
+      let productItem = cart.products[itemIndex];
+
+      if (productItem.quantity === 1) {
+        const updatedCartProductsArray = cart.products.filter(
+          (product) => product.productId !== productItem.productId
+        );
+        cart.products = updatedCartProductsArray;
+        //update the cartQuantity
+        //get array of quantities for each product
+        const quantitiesArray = cart.products.map(
+          (product) => product.quantity
+        );
+        cart.cartQuantity = quantitiesArray.reduce(
+          (acc, currValue) => acc + currValue,
+          0
+        );
+        //update the total
+        const productPrices = cart.products.map((product) => product.price);
+        cart.total = productPrices.reduce(
+          (acc, currValue) => acc + currValue,
+          0
+        );
+        await cart.save();
+        return res.status(200).json(cart);
       }
-      existingCart.products.push(product._id);
-      existingCart.count = existingCart.count + 1;
-      existingCart.total = existingCart.count * existingCart.total;
-      await existingCart.save();
-      await existingCart.populate('products').execPopulate();
-      return res.status(200).json(existingCart);
-    }
-    //if cart exists delete product
-    if (existingCart && remove) {
-      existingCart.products = existingCart.product.filter(
-        (item) => item !== product._id
+
+      productItem.quantity = productItem.quantity - 1;
+      productItem.price = productItem.price - product.price;
+      cart.products[productItem] = productItem;
+      //update the cartQuantity
+      //get array of quantities for each product
+      const quantitiesArray = cart.products.map((product) => product.quantity);
+      cart.cartQuantity = quantitiesArray.reduce(
+        (acc, currValue) => acc + currValue,
+        0
       );
-      existingCart.count = existingCart.count - 1;
-      existingCart.total = existingCart.count * existingCart.total;
-      await existingCart.save();
-      await existingCart.populate('products').execPopulate();
-      return res.status(200).json(existingCart);
+      //update the total
+      const productPrices = cart.products.map((product) => product.price);
+      cart.total = productPrices.reduce((acc, currValue) => acc + currValue, 0);
+      await cart.save();
+      return res.status(200).json(cart);
     }
-    //if NO existing cart
-    const total = product.price;
-    const count = 1;
-    const cart = new Cart({
-      ...req.body,
-      total,
-      count
-    });
-    cart.products.push(product._id);
-    await cart.save();
-    await cart.populate('products').execPopulate();
-    res.status(200).json(cart);
-  } catch (error) {
-    res.status(400).json(error.message);
   }
 });
 
@@ -60,7 +120,6 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const cart = await Cart.findOne({ userId: req.user._id });
-    await cart.populate('products').execPopulate();
     res.status(200).json(cart);
   } catch (error) {
     res.status(400).json(error.message);

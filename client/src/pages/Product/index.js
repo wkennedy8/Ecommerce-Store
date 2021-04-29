@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { AppContext } from '../../context/AppContext';
 import axios from 'axios';
 import './Product.scss';
@@ -7,7 +7,7 @@ const Product = ({ match }) => {
   const { handleUpdateCart } = useContext(AppContext);
   const [product, setProduct] = useState([]);
   const { productId } = match.params;
-
+  const inputRef = useRef(null);
   const getProducts = async () => {
     const { data } = await axios.get(`/api/products/${productId}`);
     setProduct(data);
@@ -47,11 +47,12 @@ const Product = ({ match }) => {
           type="number"
           defaultValue={1}
           className="product-details__info--qty"
+          ref={inputRef}
         />
         <button
           disabled={product.quantity === 0}
           className="product-details__info--btn"
-          onClick={() => handleUpdateCart(product)}
+          onClick={() => handleUpdateCart(product, inputRef.current.value)}
         >
           Add to Cart
         </button>
