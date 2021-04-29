@@ -10,6 +10,7 @@ export const ContextProvider = ({ children }) => {
   const [shoppingCart, setShoppingCart] = useState({});
   const [filter, setFilter] = useState('');
   const [currentUser, setCurrentUser] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const getCategories = async () => {
     const { data } = await axios.get('/api/categories');
@@ -52,6 +53,7 @@ export const ContextProvider = ({ children }) => {
   }, []);
 
   const handleUpdateCart = async (product, quantity) => {
+    setLoading(true);
     try {
       const { data } = await axios.post(
         '/api/cart',
@@ -63,6 +65,9 @@ export const ContextProvider = ({ children }) => {
         }
       );
       setShoppingCart(data);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
     } catch (error) {
       console.log('ERROR: ', error.message);
     }
@@ -99,7 +104,9 @@ export const ContextProvider = ({ children }) => {
         handleUpdateCart,
         decrementUpdateCart,
         currentUser,
-        setCurrentUser
+        setCurrentUser,
+        loading,
+        setLoading
       }}
     >
       {children}

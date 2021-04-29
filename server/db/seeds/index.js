@@ -21,6 +21,7 @@ const dbReset = async () => {
   });
 
   const categories = ['Shoes', 'T-Shirts', 'Pants', 'Accessories', 'Hoodies'];
+  const sizes = ['S', 'M', 'L', 'XL'];
   const categoryIdArray = [];
 
   for (let i = 0; i < 5; i++) {
@@ -38,6 +39,7 @@ const dbReset = async () => {
       description: faker.commerce.productDescription(),
       quantity: 5,
       image: faker.image.imageUrl(),
+      size: sizes[Math.floor(Math.random() * sizes.length)],
       categoryId:
         categoryIdArray[Math.floor(Math.random() * categoryIdArray.length)]
     });

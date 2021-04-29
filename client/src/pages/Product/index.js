@@ -4,10 +4,11 @@ import axios from 'axios';
 import './Product.scss';
 
 const Product = ({ match }) => {
-  const { handleUpdateCart } = useContext(AppContext);
+  const { handleUpdateCart, loading } = useContext(AppContext);
   const [product, setProduct] = useState([]);
   const { productId } = match.params;
   const inputRef = useRef(null);
+  const sizeRef = useRef(null);
   const getProducts = async () => {
     const { data } = await axios.get(`/api/products/${productId}`);
     setProduct(data);
@@ -21,26 +22,26 @@ const Product = ({ match }) => {
   return (
     <div className="product-details">
       <img
-        src={product.image}
-        alt={product.name}
+        src={product?.image}
+        alt={product?.name}
         className="product-details__image"
       />
       <div className="product-details__info">
-        <h1 className="product-details__info--name">{product.name}</h1>
+        <h1 className="product-details__info--name">{product?.name}</h1>
         <h4 className="product-details__info--price">
           ${product?.price?.toFixed(2)}
         </h4>
         <p>DESCRIPTION</p>
         <p className="product-details__info--description">
-          {product.description}
+          {product?.description}
         </p>
         <p>SIZE</p>
-        <select className="product-details__info--select">
+        <select className="product-details__info--select" ref={sizeRef}>
           <option>Select Size</option>
-          <option>S</option>
-          <option>M</option>
-          <option>L</option>
-          <option>XL</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
         </select>
         <p>QTY</p>
         <input
@@ -50,11 +51,16 @@ const Product = ({ match }) => {
           ref={inputRef}
         />
         <button
-          disabled={product.quantity === 0}
+          disabled={loading || product?.quantity === 0}
           className="product-details__info--btn"
-          onClick={() => handleUpdateCart(product, inputRef.current.value)}
+          onClick={() =>
+            handleUpdateCart(
+              { ...product, size: sizeRef.current.value },
+              inputRef.current.value
+            )
+          }
         >
-          Add to Cart
+          {loading ? 'Adding' : 'Add to Cart'}
         </button>
       </div>
     </div>

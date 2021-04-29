@@ -16,7 +16,8 @@ router.post('/', async (req, res) => {
       //select the product in the products array via the index position
       let productItem = existingCart.products[itemIndex];
       //update the price
-      productItem.price = Number(productItem.price) + Number(product.price);
+      productItem.price =
+        Number(productItem.price) + Number(product.price) * Number(quantity);
       //update the quantity
       productItem.quantity = Number(productItem.quantity) + Number(quantity);
       //update the product item in the products array
@@ -30,9 +31,10 @@ router.post('/', async (req, res) => {
         productId: product._id,
         quantity,
         name: product.name,
-        price: product.price,
+        price: product.price * quantity,
         description: product.description,
-        image: product.image
+        image: product.image,
+        size: product.size
       });
       //update the cartQuantity
       existingCart.cartQuantity =
@@ -52,10 +54,18 @@ router.post('/', async (req, res) => {
   }
 
   //If NO existing cart
-  const { name, description, image, price, _id } = product;
+  const { name, description, image, price, _id, size } = product;
   const newCart = new Cart({
     userId: req.user._id,
-    products: { productId: _id, name, description, image, price, quantity },
+    products: {
+      productId: _id,
+      name,
+      description,
+      image,
+      price,
+      quantity,
+      size
+    },
     cartQuantity: quantity,
     total: price
   });

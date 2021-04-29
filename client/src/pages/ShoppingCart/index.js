@@ -2,14 +2,13 @@ import React, { useContext, useState } from 'react';
 import { AppContext } from '../../context/AppContext';
 import { AuthModal } from '../../components';
 import './ShoppingCart.scss';
+import { Button } from 'react-bootstrap';
 
 const ShoppingCart = () => {
   const { shoppingCart, currentUser, decrementUpdateCart } = useContext(
     AppContext
   );
   const [showModal, setShowModal] = useState(false);
-
-  console.log(shoppingCart);
 
   return (
     <div>
@@ -20,7 +19,7 @@ const ShoppingCart = () => {
           items to your shopping cart
         </p>
       )}
-      {shoppingCart && shoppingCart.products.length > 0 ? (
+      {currentUser && shoppingCart && shoppingCart.products?.length > 0 ? (
         <table style={{ width: '100%' }}>
           <thead>
             <tr>
@@ -53,7 +52,7 @@ const ShoppingCart = () => {
                     />
                     <div>
                       <h6>{product.name}</h6>
-                      <p>Size: L</p>
+                      <p>Size: {product.size}</p>
                     </div>
                   </div>
                 </td>
@@ -67,8 +66,11 @@ const ShoppingCart = () => {
         <h1>No items in your cart, please continue shopping!</h1>
       )}
 
-      {shoppingCart.products.length > 0 && (
-        <p>Total: ${shoppingCart.total?.toFixed(2)}</p>
+      {shoppingCart.products?.length > 0 && (
+        <div>
+          <p>Total: ${shoppingCart.total?.toFixed(2)}</p>
+          <Button>Checkout</Button>
+        </div>
       )}
       <AuthModal show={showModal} onHide={() => setShowModal(false)} />
     </div>
