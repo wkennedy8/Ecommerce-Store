@@ -2,13 +2,11 @@ const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema(
   {
-    products: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product'
-      }
-    ],
-    subTotal: {
+    cart: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Cart'
+    },
+    subtotal: {
       type: Number,
       required: true
     },
@@ -20,6 +18,10 @@ const orderSchema = new mongoose.Schema(
     total: {
       type: Number,
       required: true
+    },
+    transactionId: {
+      type: String,
+      required: true
     }
   },
   {
@@ -28,3 +30,5 @@ const orderSchema = new mongoose.Schema(
 );
 
 const Order = mongoose.model('Order', orderSchema);
+
+module.exports = Order;

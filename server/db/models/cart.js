@@ -47,6 +47,10 @@ const cartSchema = new mongoose.Schema(
     total: {
       type: Number,
       required: true
+    },
+    isOpen: {
+      type: Boolean,
+      default: true
     }
   },
   {

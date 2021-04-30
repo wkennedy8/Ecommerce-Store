@@ -3,12 +3,10 @@ import { CgShoppingCart } from 'react-icons/cg';
 import { DiGithubBadge } from 'react-icons/di';
 import { RiLinkedinBoxFill } from 'react-icons/ri';
 import { NavLink, useHistory } from 'react-router-dom';
-import { Badge } from 'react-bootstrap';
 import './Header.scss';
 
 const Header = () => {
   const history = useHistory();
-  const cart = JSON.parse(sessionStorage.getItem('cart'));
 
   return (
     <header className="header">

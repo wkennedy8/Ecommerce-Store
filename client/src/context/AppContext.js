@@ -11,6 +11,7 @@ export const ContextProvider = ({ children }) => {
   const [filter, setFilter] = useState('');
   const [currentUser, setCurrentUser] = useState('');
   const [loading, setLoading] = useState(false);
+  const [purchased, setPurchased] = useState(false);
 
   const getCategories = async () => {
     const { data } = await axios.get('/api/categories');
@@ -54,6 +55,7 @@ export const ContextProvider = ({ children }) => {
 
   const handleUpdateCart = async (product, quantity) => {
     setLoading(true);
+
     try {
       const { data } = await axios.post(
         '/api/cart',
@@ -65,6 +67,7 @@ export const ContextProvider = ({ children }) => {
         }
       );
       setShoppingCart(data);
+      setPurchased(false);
       setTimeout(() => {
         setLoading(false);
       }, 1500);
@@ -106,7 +109,10 @@ export const ContextProvider = ({ children }) => {
         currentUser,
         setCurrentUser,
         loading,
-        setLoading
+        setLoading,
+        token,
+        purchased,
+        setPurchased
       }}
     >
       {children}

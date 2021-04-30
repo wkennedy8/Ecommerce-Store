@@ -16,6 +16,7 @@ const openCategoryRoutes = require('./routes/open/categories');
 const secureProductRoutes = require('./routes/secure/products');
 const secureCartRoutes = require('./routes/secure/carts');
 const secureUserRoutes = require('./routes/secure/users');
+const secureOrderRoutes = require('./routes/secure/orders');
 
 app.use(express.json());
 
@@ -28,6 +29,7 @@ app.use('/api/*', passport.authenticate('jwt', { session: false }));
 app.use('/api/products', secureProductRoutes);
 app.use('/api/cart', secureCartRoutes);
 app.use('/api/users', secureUserRoutes);
+app.use('/api/order', secureOrderRoutes);
 
 app.listen(PORT, () => {
   console.log(`Express is running on port ${PORT}`);
