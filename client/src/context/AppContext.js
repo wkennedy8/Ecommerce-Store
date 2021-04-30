@@ -13,6 +13,8 @@ export const ContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [purchased, setPurchased] = useState(false);
 
+  console.log(token);
+
   const getCategories = async () => {
     const { data } = await axios.get('/api/categories');
     setCategories(data);
@@ -51,7 +53,7 @@ export const ContextProvider = ({ children }) => {
     }
 
     // eslint-disable-next-line
-  }, []);
+  }, [currentUser]);
 
   const handleUpdateCart = async (product, quantity) => {
     setLoading(true);
@@ -67,7 +69,6 @@ export const ContextProvider = ({ children }) => {
         }
       );
       setShoppingCart(data);
-      setPurchased(false);
       setTimeout(() => {
         setLoading(false);
       }, 1500);

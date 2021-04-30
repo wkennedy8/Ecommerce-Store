@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
-import { AuthModal, CheckoutModal } from '../../components';
+import { CheckoutModal } from '../../components';
 import './ShoppingCart.scss';
 import { Button } from 'react-bootstrap';
 import { loadStripe } from '@stripe/stripe-js';
@@ -14,18 +14,16 @@ const ShoppingCart = () => {
     shoppingCart,
     currentUser,
     decrementUpdateCart,
-    purchased
+    purchased,
+    setPurchased
   } = useContext(AppContext);
-  const [showAuthModal, setShowAuthModal] = useState(false);
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
 
-  console.log(shoppingCart);
   const renderLoginMessage = () => {
     return (
-      <p>
-        Please <span onClick={() => setShowAuthModal(true)}>LOGIN</span> to add
-        items to your shopping cart
-      </p>
+      <h6 className="text-center">
+        Please login/register to add items to your shopping cart
+      </h6>
     );
   };
 
@@ -33,7 +31,9 @@ const ShoppingCart = () => {
     return (
       <div>
         <h1>Thank you for your Purchase!</h1>
-        <Link to="/">Go to home</Link>
+        <Link to="/" onClick={() => setPurchased(false)}>
+          Go to home
+        </Link>
       </div>
     );
   };
@@ -121,7 +121,7 @@ const ShoppingCart = () => {
           </Button>
         </div>
       )}
-      <AuthModal show={showAuthModal} onHide={() => setShowAuthModal(false)} />
+
       <Elements stripe={stripePromise}>
         <CheckoutModal
           show={showCheckoutModal}

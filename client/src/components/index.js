@@ -3,6 +3,7 @@ import Category from './Category';
 import ProductCard from './ProductCard';
 import Filter from './Filter';
 import AuthModal from './AuthModal';
+import SignUpModal from './SignUpModal';
 import CheckoutModal from './CheckoutModal';
 import Field from './Field';
 
@@ -13,5 +14,6 @@ export {
   Filter,
   AuthModal,
   CheckoutModal,
-  Field
+  Field,
+  SignUpModal
 };

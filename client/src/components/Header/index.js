@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { AppContext } from '../../context/AppContext';
 import { CgShoppingCart } from 'react-icons/cg';
 import { DiGithubBadge } from 'react-icons/di';
 import { RiLinkedinBoxFill } from 'react-icons/ri';
 import { NavLink, useHistory } from 'react-router-dom';
+import { NavDropdown } from 'react-bootstrap';
+import { AuthModal, SignUpModal } from '../index';
 import './Header.scss';
 
 const Header = () => {
   const history = useHistory();
+  const { setCurrentUser, currentUser } = useContext(AppContext);
+  const [loginModal, setLoginModal] = useState(false);
+  const [signupModal, setSignupModal] = useState(false);
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    setCurrentUser('');
+  };
 
   return (
     <header className="header">
@@ -40,7 +51,28 @@ const Header = () => {
             <Badge variant="dark">{Object.values(cart).count}</Badge>
           )} */}
         </li>
+        <li>
+          <NavDropdown
+            title={currentUser.email || 'Guest'}
+            id="basic-nav-dropdown"
+          >
+            {!currentUser ? (
+              <>
+                <NavDropdown.Item onClick={() => setLoginModal(true)}>
+                  Login
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => setSignupModal(true)}>
+                  Create Account
+                </NavDropdown.Item>
+              </>
+            ) : (
+              <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+            )}
+          </NavDropdown>
+        </li>
       </ul>
+      <AuthModal show={loginModal} onHide={() => setLoginModal(false)} />
+      <SignUpModal show={signupModal} onHide={() => setSignupModal(false)} />
     </header>
   );
 };
