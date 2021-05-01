@@ -58,7 +58,7 @@ const Header = () => {
           className="header__list--item social-icon"
           onClick={() => history.push('/cart')}
           data-tooltip={
-            shoppingCart.cartQuantity > 0 ? shoppingCart.cartQuantity : null
+            shoppingCart?.cartQuantity > 0 ? shoppingCart?.cartQuantity : null
           }
         >
           <CgShoppingCart style={{ color: '#007bff' }} />

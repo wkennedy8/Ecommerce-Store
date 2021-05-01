@@ -97,6 +97,23 @@ export const ContextProvider = ({ children }) => {
     }
   };
 
+  const removeItemFromCart = async (product, cartId) => {
+    try {
+      const { data } = await axios.put(
+        `/api/cart/remove`,
+        { product, cartId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      setShoppingCart(data);
+    } catch (error) {
+      console.log('ERROR: ', error.message);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -110,6 +127,7 @@ export const ContextProvider = ({ children }) => {
         setShoppingCart,
         handleUpdateCart,
         decrementUpdateCart,
+        removeItemFromCart,
         currentUser,
         setCurrentUser,
         loading,

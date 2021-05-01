@@ -2,7 +2,8 @@ const router = require('express').Router();
 const {
   createOrUpdateCart,
   decrementCart,
-  getCart
+  getCart,
+  removeItemFromCart
 } = require('../../controllers/carts');
 
 //create/update a cart
@@ -13,5 +14,7 @@ router.put('/:id', decrementCart);
 
 //cart for currentUser
 router.get('/', getCart);
+
+router.post('/remove', removeItemFromCart);
 
 module.exports = router;
