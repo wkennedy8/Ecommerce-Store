@@ -5,7 +5,7 @@ import { DiGithubBadge } from 'react-icons/di';
 import { RiLinkedinBoxFill } from 'react-icons/ri';
 import { NavLink, useHistory } from 'react-router-dom';
 import { NavDropdown } from 'react-bootstrap';
-import { AuthModal, SignUpModal } from '../index';
+import { LoginModal, SignUpModal } from '../index';
 import './Header.scss';
 
 const Header = () => {
@@ -37,10 +37,22 @@ const Header = () => {
       </div>
       <ul className="header__list">
         <li className="header__list--item social-icon">
-          <DiGithubBadge />
+          <a
+            href="https://github.com/wkennedy8"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <DiGithubBadge />
+          </a>
         </li>
         <li className="header__list--item social-icon">
-          <RiLinkedinBoxFill />
+          <a
+            href="https://www.linkedin.com/in/williamkennedy8/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <RiLinkedinBoxFill />
+          </a>
         </li>
         <li
           className="header__list--item social-icon"
@@ -49,14 +61,11 @@ const Header = () => {
             shoppingCart.cartQuantity > 0 ? shoppingCart.cartQuantity : null
           }
         >
-          <CgShoppingCart />
-          {/* {Object.values(cart).count > 0 && (
-            <Badge variant="dark">{Object.values(cart).count}</Badge>
-          )} */}
+          <CgShoppingCart style={{ color: '#007bff' }} />
         </li>
         <li>
           <NavDropdown
-            title={currentUser.email || 'Guest'}
+            title={currentUser.name || 'Guest'}
             id="basic-nav-dropdown"
           >
             {!currentUser ? (
@@ -74,7 +83,7 @@ const Header = () => {
           </NavDropdown>
         </li>
       </ul>
-      <AuthModal show={loginModal} onHide={() => setLoginModal(false)} />
+      <LoginModal show={loginModal} onHide={() => setLoginModal(false)} />
       <SignUpModal show={signupModal} onHide={() => setSignupModal(false)} />
     </header>
   );

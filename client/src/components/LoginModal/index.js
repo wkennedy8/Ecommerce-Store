@@ -3,7 +3,7 @@ import { AppContext } from '../../context/AppContext';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 
-const AuthModal = (props) => {
+const LoginModal = (props) => {
   const { setCurrentUser } = useContext(AppContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,4 +52,4 @@ const AuthModal = (props) => {
   );
 };
 
-export default AuthModal;
+export default LoginModal;

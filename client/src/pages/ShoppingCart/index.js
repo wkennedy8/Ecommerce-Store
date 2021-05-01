@@ -70,7 +70,7 @@ const ShoppingCart = () => {
             <th>Price</th>
           </tr>
           {shoppingCart.products?.map((product) => (
-            <tr key={product.productId}>
+            <tr key={product._id}>
               <td>
                 <div className="d-flex align-items-center justify-content-around">
                   <div

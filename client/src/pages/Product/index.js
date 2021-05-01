@@ -14,6 +14,8 @@ const Product = ({ match }) => {
     setProduct(data);
   };
 
+  const SIZES = ['S', 'M', 'L', 'XL'];
+
   useEffect(() => {
     getProducts();
     // eslint-disable-next-line
@@ -37,11 +39,11 @@ const Product = ({ match }) => {
         </p>
         <p>SIZE</p>
         <select className="product-details__info--select" ref={sizeRef}>
-          <option>Select Size</option>
-          <option value="S">S</option>
-          <option value="M">M</option>
-          <option value="L">L</option>
-          <option value="XL">XL</option>
+          {SIZES.map((size) => (
+            <option key={size} value={size}>
+              {size}
+            </option>
+          ))}
         </select>
         <p>QTY</p>
         <input
