@@ -11,7 +11,7 @@ exports.createOrUpdateCart = async (req, res) => {
   if (existingCart) {
     //check if item is inside the products array
     let itemIndex = existingCart.products.findIndex(
-      (p) => p.productId == product._id
+      (p) => p.productId == product._id && p.size == product.size
     );
     if (itemIndex > -1) {
       //select the product in the products array via the index position
@@ -84,14 +84,17 @@ exports.decrementCart = async (req, res) => {
   });
   if (cart) {
     //find the product
-    let itemIndex = cart.products.findIndex((p) => p.productId == product._id);
+    let itemIndex = cart.products.findIndex(
+      (p) => p.productId == product._id && p.size == product.size
+    );
     if (itemIndex > -1) {
       let productItem = cart.products[itemIndex];
 
       if (productItem.quantity === 1) {
         const updatedCartProductsArray = cart.products.filter(
-          (product) => product.productId !== productItem.productId
+          (product) => product._id !== productItem._id
         );
+
         cart.products = updatedCartProductsArray;
         //update the cartQuantity
         //get array of quantities for each product

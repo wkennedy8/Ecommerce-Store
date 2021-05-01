@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 export const AppContext = createContext();
 
@@ -12,8 +13,6 @@ export const ContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState('');
   const [loading, setLoading] = useState(false);
   const [purchased, setPurchased] = useState(false);
-
-  console.log(token);
 
   const getCategories = async () => {
     const { data } = await axios.get('/api/categories');
@@ -68,12 +67,16 @@ export const ContextProvider = ({ children }) => {
           }
         }
       );
-      setShoppingCart(data);
       setTimeout(() => {
+        setShoppingCart(data);
         setLoading(false);
       }, 1500);
     } catch (error) {
-      console.log('ERROR: ', error.message);
+      await swal(
+        'Uh-oh',
+        'Please login or create an account to add items to your cart'
+      );
+      setLoading(false);
     }
   };
 

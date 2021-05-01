@@ -10,7 +10,7 @@ import './Header.scss';
 
 const Header = () => {
   const history = useHistory();
-  const { setCurrentUser, currentUser } = useContext(AppContext);
+  const { setCurrentUser, currentUser, shoppingCart } = useContext(AppContext);
   const [loginModal, setLoginModal] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
 
@@ -45,6 +45,9 @@ const Header = () => {
         <li
           className="header__list--item social-icon"
           onClick={() => history.push('/cart')}
+          data-tooltip={
+            shoppingCart.cartQuantity > 0 ? shoppingCart.cartQuantity : null
+          }
         >
           <CgShoppingCart />
           {/* {Object.values(cart).count > 0 && (

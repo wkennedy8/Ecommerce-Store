@@ -21,6 +21,28 @@
     cursor: pointer;
   }
 }
+
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  color: #fff;
+  font-size: 10px;
+  background-color: #000;
+  border-radius: 50%;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  top: 0;
+  right: 0;
+  text-align: center;
+  transform: translate(10%, -30%);
+}
 // .active {
 //   color: #000;
 //   border-bottom: 1px solid red;
