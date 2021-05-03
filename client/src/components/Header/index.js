@@ -1,8 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../../context/AppContext';
-import { CgShoppingCart } from 'react-icons/cg';
-import { DiGithubBadge } from 'react-icons/di';
-import { RiLinkedinBoxFill } from 'react-icons/ri';
 import { NavLink, useHistory } from 'react-router-dom';
 import { NavDropdown, Navbar, Nav, Form } from 'react-bootstrap';
 import { LoginModal, SignUpModal } from '../index';
@@ -10,9 +7,7 @@ import './Header.scss';
 
 const Header = () => {
   const history = useHistory();
-  const { setCurrentUser, currentUser, shoppingCart, products } = useContext(
-    AppContext
-  );
+  const { setCurrentUser, currentUser, shoppingCart } = useContext(AppContext);
   const [loginModal, setLoginModal] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
 
