@@ -34,3 +34,7 @@ app.use('/api/order', secureOrderRoutes);
 app.listen(PORT, () => {
   console.log(`Express is running on port ${PORT}`);
 });
+
+const hi = 'hi';
+
+hi;
