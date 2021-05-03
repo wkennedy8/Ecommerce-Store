@@ -4,13 +4,15 @@ import { CgShoppingCart } from 'react-icons/cg';
 import { DiGithubBadge } from 'react-icons/di';
 import { RiLinkedinBoxFill } from 'react-icons/ri';
 import { NavLink, useHistory } from 'react-router-dom';
-import { NavDropdown } from 'react-bootstrap';
+import { NavDropdown, Navbar, Nav, Form } from 'react-bootstrap';
 import { LoginModal, SignUpModal } from '../index';
 import './Header.scss';
 
 const Header = () => {
   const history = useHistory();
-  const { setCurrentUser, currentUser, shoppingCart } = useContext(AppContext);
+  const { setCurrentUser, currentUser, shoppingCart, products } = useContext(
+    AppContext
+  );
   const [loginModal, setLoginModal] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
 
@@ -20,53 +22,29 @@ const Header = () => {
   };
 
   return (
-    <header className="header">
-      <ul className="header__list">
-        <NavLink to="/" activeClassName="active">
-          <li className="header__list--item">Shop</li>
-        </NavLink>
-        <NavLink to="/about" activeClassName="active">
-          <li className="header__list--item">About</li>
-        </NavLink>
-        <NavLink to="/contact" activeClassName="active">
-          <li className="header__list--item">Contact</li>
-        </NavLink>
-      </ul>
-      <div className="header__name">
-        <h3>ECommerce</h3>
-      </div>
-      <ul className="header__list">
-        <li className="header__list--item social-icon">
-          <a
-            href="https://github.com/wkennedy8"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <DiGithubBadge />
-          </a>
-        </li>
-        <li className="header__list--item social-icon">
-          <a
-            href="https://www.linkedin.com/in/williamkennedy8/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <RiLinkedinBoxFill />
-          </a>
-        </li>
-        <li
-          className="header__list--item social-icon"
-          onClick={() => history.push('/cart')}
-          data-tooltip={
-            shoppingCart?.cartQuantity > 0 ? shoppingCart?.cartQuantity : null
-          }
-        >
-          <CgShoppingCart style={{ color: '#007bff' }} />
-        </li>
-        <li>
+    <Navbar bg="transparent" expand="lg" className="p-4">
+      <Navbar.Brand as={NavLink} to="/">
+        React Online Shop
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="ml-auto">
+          <Nav.Link as={NavLink} to="/">
+            Shop
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/about">
+            About
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/contact">
+            Contact
+          </Nav.Link>
+        </Nav>
+
+        <Nav className="pr-4">
           <NavDropdown
-            title={currentUser.name || 'Guest'}
-            id="basic-nav-dropdown"
+            title={currentUser.name || currentUser.email || 'Guest'}
+            id="dropdown-menu-align-responsive-2"
+            style={{ right: 0 }}
           >
             {!currentUser ? (
               <>
@@ -78,14 +56,29 @@ const Header = () => {
                 </NavDropdown.Item>
               </>
             ) : (
-              <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+              <>
+                <NavDropdown.Item
+                  onClick={() => history.push('/cart')}
+                  data-tooltip={
+                    shoppingCart?.cartQuantity > 0
+                      ? shoppingCart?.cartQuantity
+                      : null
+                  }
+                >
+                  Cart
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={handleLogout}>
+                  Logout
+                </NavDropdown.Item>
+              </>
             )}
           </NavDropdown>
-        </li>
-      </ul>
+        </Nav>
+      </Navbar.Collapse>
       <LoginModal show={loginModal} onHide={() => setLoginModal(false)} />
       <SignUpModal show={signupModal} onHide={() => setSignupModal(false)} />
-    </header>
+    </Navbar>
   );
 };
 
