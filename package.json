@@ -22,6 +22,7 @@
   },
   "scripts": {
     "start": "node ./server/index.js",
-    "seed": "node ./server/db/seeds/index"
+    "seed": "node ./server/db/seeds/index",
+    "heroku-postbuild": "cd client && yarn && yarn run build"
   }
 }

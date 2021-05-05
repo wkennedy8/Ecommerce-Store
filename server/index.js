@@ -4,6 +4,7 @@ require('./db/config');
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 8000;
+const path = require('path');
 //passport middleware
 const passport = require('./middleware/authentication');
 
@@ -22,7 +23,7 @@ app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
-  app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
+  app.use(express.static(path.resolve(__dirname, '.', 'client', 'build')));
 }
 
 app.use('/api/users', openUserRoutes);
@@ -40,7 +41,7 @@ if (process.env.NODE_ENV === 'production') {
   // Handle React routing, return all requests to React app
   app.get('*', (request, response) => {
     response.sendFile(
-      path.resolve(__dirname, '..', 'client', 'build', 'index.html')
+      path.resolve(__dirname, '.', 'client', 'build', 'index.html')
     );
   });
 }
