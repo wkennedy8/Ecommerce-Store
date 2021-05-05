@@ -20,6 +20,11 @@ const secureOrderRoutes = require('./routes/secure/orders');
 
 app.use(express.json());
 
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+  app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
+}
+
 app.use('/api/users', openUserRoutes);
 app.use('/api/products', openProductRoutes);
 app.use('/api/categories', openCategoryRoutes);
@@ -31,10 +36,15 @@ app.use('/api/cart', secureCartRoutes);
 app.use('/api/users', secureUserRoutes);
 app.use('/api/order', secureOrderRoutes);
 
+if (process.env.NODE_ENV === 'production') {
+  // Handle React routing, return all requests to React app
+  app.get('*', (request, response) => {
+    response.sendFile(
+      path.resolve(__dirname, '..', 'client', 'build', 'index.html')
+    );
+  });
+}
+
 app.listen(PORT, () => {
   console.log(`Express is running on port ${PORT}`);
 });
-
-const hi = 'hi';
-
-hi;

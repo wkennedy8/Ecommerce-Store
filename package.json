@@ -1,0 +1,27 @@
+{
+  "name": "ecommerce-store",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:wkennedy8/Ecommerce-Store.git",
+  "author": "Will <wkennedy210@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "faker": "^5.5.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.5",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "stripe": "^8.145.0",
+    "validator": "^13.6.0"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "server": "nodemon server/index.js",
+    "seed": "node server/db/seeds/index"
+  }
+}
