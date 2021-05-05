@@ -15,7 +15,14 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 const CartDrawer = () => {
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const history = useHistory();
-  const { showCart, setShowCart, shoppingCart } = useContext(AppContext);
+  const {
+    showCart,
+    setShowCart,
+    shoppingCart,
+    currentUser,
+    purchased,
+    setPurchased
+  } = useContext(AppContext);
 
   const handleSelect = (productId) => {
     setShowCart(false);
@@ -27,6 +34,47 @@ const CartDrawer = () => {
     setShowCheckoutModal(true);
   };
 
+  const renderLoginMessage = () => {
+    return (
+      <Drawer anchor="right" open={showCart} onClose={() => setShowCart(false)}>
+        <RiCloseLine
+          className="side-drawer--close"
+          onClick={() => setShowCart(false)}
+        />
+        <div className="side-drawer">
+          <h6 className="text-center">
+            Please login/register to add items to your shopping cart
+          </h6>
+        </div>
+      </Drawer>
+    );
+  };
+
+  const renderEmptyCartMessage = () => {
+    return (
+      <Drawer anchor="right" open={showCart} onClose={() => setShowCart(false)}>
+        <RiCloseLine
+          className="side-drawer--close"
+          onClick={() => setShowCart(false)}
+        />
+        <div className="side-drawer">
+          <h4>Your cart</h4>
+          <h5 className="mt-4">
+            No items in your cart, please continue shopping!
+          </h5>
+        </div>
+      </Drawer>
+    );
+  };
+
+  if (!currentUser) {
+    return renderLoginMessage();
+  }
+
+  if (!shoppingCart?.products || shoppingCart?.products?.length < 1) {
+    return renderEmptyCartMessage();
+  }
+
   return (
     <>
       <Drawer anchor="right" open={showCart} onClose={() => setShowCart(false)}>
@@ -37,7 +85,7 @@ const CartDrawer = () => {
         <div className="side-drawer">
           <h5>Your cart</h5>
           {shoppingCart?.products?.map((product) => (
-            <>
+            <div key={product.productId}>
               <div className="cart-product-row">
                 <div className="cart-product-row--image">
                   <img
@@ -72,7 +120,7 @@ const CartDrawer = () => {
                 <p>Price</p>
                 <p>${product.price.toFixed(2)}</p>
               </div>
-            </>
+            </div>
           ))}
           <Divider />
           <div className="cart-footer">
