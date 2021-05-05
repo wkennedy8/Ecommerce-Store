@@ -1,0 +1,29 @@
+.side-drawer {
+  padding: 20px;
+  margin-top: 60px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &--close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 20px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &--item {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

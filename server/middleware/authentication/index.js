@@ -12,6 +12,7 @@ passport.use(
   'jwt',
   new JwtStrategy(jwtOptions, async (jwtPayload, done) => {
     if (Date.now() > jwtPayload.expires) {
+      console.log('hit');
       return done(null, false, { message: 'jwt expired' });
     }
     let { iat, exp, ...userData } = jwtPayload;

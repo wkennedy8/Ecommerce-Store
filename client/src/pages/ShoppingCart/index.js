@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { CheckoutModal } from '../../components';
 import './ShoppingCart.scss';
-import { Button } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
-const ShoppingCart = () => {
+const ShoppingCart = ({ history }) => {
   const {
     shoppingCart,
     currentUser,
@@ -21,29 +21,31 @@ const ShoppingCart = () => {
 
   const renderLoginMessage = () => {
     return (
-      <h6 className="text-center">
-        Please login/register to add items to your shopping cart
-      </h6>
+      <Container>
+        <h6 className="text-center">
+          Please login/register to add items to your shopping cart
+        </h6>
+      </Container>
     );
   };
 
   const renderPurchaseMessage = () => {
     return (
-      <div>
+      <Container>
         <h1>Thank you for your Purchase!</h1>
         <Link to="/" onClick={() => setPurchased(false)}>
           Go to home
         </Link>
-      </div>
+      </Container>
     );
   };
 
   const renderEmptyCartMessage = () => {
     return (
-      <div>
+      <Container>
         <h4>Your cart</h4>
         <h5>No items in your cart, please continue shopping!</h5>
-      </div>
+      </Container>
     );
   };
 
@@ -60,7 +62,7 @@ const ShoppingCart = () => {
   }
 
   return (
-    <div>
+    <Container>
       <h4>Your cart</h4>
       <table style={{ width: '100%' }}>
         <thead>
@@ -70,10 +72,11 @@ const ShoppingCart = () => {
             <th>Price</th>
           </tr>
           {shoppingCart.products?.map((product) => (
-            <tr key={product._id}>
+            <tr key={product._id} className="will">
               <td>
-                <div className="d-flex align-items-center justify-content-around">
+                <div className="d-flex align-items-center">
                   <div
+                    className="pr-4 will-remove"
                     onClick={() =>
                       decrementUpdateCart(
                         {
@@ -88,6 +91,7 @@ const ShoppingCart = () => {
                     x
                   </div>
                   <img
+                    className="pr-4"
                     style={{
                       height: 300,
                       width: 150,
@@ -97,7 +101,13 @@ const ShoppingCart = () => {
                     alt={product.name}
                   />
                   <div>
-                    <h6>{product.name}</h6>
+                    <h6
+                      onClick={() =>
+                        history.push(`/products/${product.productId}`)
+                      }
+                    >
+                      {product.name}
+                    </h6>
                     <p>Size: {product.size}</p>
                   </div>
                 </div>
@@ -110,7 +120,7 @@ const ShoppingCart = () => {
       </table>
 
       {shoppingCart?.products?.length > 0 && !purchased && (
-        <div>
+        <div className="mt-4">
           <p>Total: ${shoppingCart.total?.toFixed(2)}</p>
           <Button
             size="lg"
@@ -128,7 +138,7 @@ const ShoppingCart = () => {
           onHide={() => setShowCheckoutModal(false)}
         />
       </Elements>
-    </div>
+    </Container>
   );
 };
 

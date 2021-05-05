@@ -1,13 +1,19 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../../context/AppContext';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import { NavLink, useHistory } from 'react-router-dom';
-import { NavDropdown, Navbar, Nav, Form } from 'react-bootstrap';
-import { LoginModal, SignUpModal } from '../index';
 import './Header.scss';
+import { NavDropdown, Navbar, Nav } from 'react-bootstrap';
+import { LoginModal, SignUpModal } from '../index';
 
 const Header = () => {
   const history = useHistory();
-  const { setCurrentUser, currentUser, shoppingCart } = useContext(AppContext);
+  const {
+    setCurrentUser,
+    currentUser,
+    shoppingCart,
+    setShowDrawer
+  } = useContext(AppContext);
   const [loginModal, setLoginModal] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
 
@@ -18,28 +24,25 @@ const Header = () => {
 
   return (
     <Navbar bg="transparent" expand="lg" className="p-4">
+      <GiHamburgerMenu
+        className="mr-4 hamburger"
+        onClick={() => setShowDrawer(true)}
+      />
       <Navbar.Brand as={NavLink} to="/">
         React Online Shop
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
-          <Nav.Link as={NavLink} to="/">
+          <Nav.Link as={NavLink} to="/shop">
             Shop
-          </Nav.Link>
-          <Nav.Link as={NavLink} to="/about">
-            About
-          </Nav.Link>
-          <Nav.Link as={NavLink} to="/contact">
-            Contact
           </Nav.Link>
         </Nav>
 
-        <Nav className="pr-4">
+        <Nav className="pr-4 right-dropdown">
           <NavDropdown
             title={currentUser.name || currentUser.email || 'Guest'}
             id="dropdown-menu-align-responsive-2"
-            style={{ right: 0 }}
           >
             {!currentUser ? (
               <>

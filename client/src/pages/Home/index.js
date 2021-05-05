@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ProductCard, Filter } from '../../components';
+import { Hero } from '../../components';
 import { AppContext } from '../../context/AppContext';
 import './Home.scss';
 
@@ -8,14 +8,7 @@ const Home = () => {
 
   return (
     <div>
-      <Filter />
-      <div className="products">
-        {products
-          .filter((item) => item.categoryId.includes(filter))
-          .map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
-      </div>
+      <Hero />
     </div>
   );
 };

@@ -19,3 +19,12 @@
   text-align: center;
   transform: translate(10%, -30%);
 }
+
+.right-dropdown .dropdown-menu {
+  left: auto;
+  right: 0;
+}
+
+.hamburger {
+  cursor: pointer;
+}

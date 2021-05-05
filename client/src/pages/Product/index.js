@@ -33,11 +33,11 @@ const Product = ({ match }) => {
         <h4 className="product-details__info--price">
           ${product?.price?.toFixed(2)}
         </h4>
-        <p>DESCRIPTION</p>
+        <h6 className="mt-4">DESCRIPTION</h6>
         <p className="product-details__info--description">
           {product?.description}
         </p>
-        <p>SIZE</p>
+        <h6>SIZE</h6>
         <select className="product-details__info--select" ref={sizeRef}>
           {SIZES.map((size) => (
             <option key={size} value={size}>
@@ -45,7 +45,7 @@ const Product = ({ match }) => {
             </option>
           ))}
         </select>
-        <p>QTY</p>
+        <h6 className="mt-4">QTY</h6>
         <input
           type="number"
           defaultValue={1}

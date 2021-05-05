@@ -23,7 +23,7 @@ const LoginModal = (props) => {
   return (
     <Modal
       {...props}
-      size="sm"
+      size="m"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >

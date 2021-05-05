@@ -5,7 +5,7 @@ import './About.scss';
 
 const About = () => {
   return (
-    <div className="d-flex flex-column align-items-center ">
+    <div className="d-flex flex-column align-items-center full-height">
       <h1>Made with the MERN Stack</h1>
       <p>This application was built using the following:</p>
       <br />

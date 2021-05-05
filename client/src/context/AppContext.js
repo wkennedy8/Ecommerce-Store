@@ -13,6 +13,7 @@ export const ContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState('');
   const [loading, setLoading] = useState(false);
   const [purchased, setPurchased] = useState(false);
+  const [showDrawer, setShowDrawer] = useState(false);
 
   const getCategories = async () => {
     const { data } = await axios.get('/api/categories');
@@ -25,12 +26,16 @@ export const ContextProvider = ({ children }) => {
   };
 
   const getCurrentUser = async () => {
-    const { data } = await axios.get('/api/users/current', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setCurrentUser(data);
+    try {
+      const { data } = await axios.get('/api/users/current', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setCurrentUser(data);
+    } catch (error) {
+      sessionStorage.clear();
+    }
   };
 
   const getCart = async () => {
@@ -134,7 +139,9 @@ export const ContextProvider = ({ children }) => {
         setLoading,
         token,
         purchased,
-        setPurchased
+        setPurchased,
+        showDrawer,
+        setShowDrawer
       }}
     >
       {children}
