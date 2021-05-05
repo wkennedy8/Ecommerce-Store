@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../../context/AppContext';
 import { GiHamburgerMenu, GiShoppingBag } from 'react-icons/gi';
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './Header.scss';
-import { NavDropdown, Navbar, Nav } from 'react-bootstrap';
+import { NavDropdown } from 'react-bootstrap';
 import { LoginModal, SignUpModal } from '../index';
 
 const Header = () => {
@@ -13,6 +13,7 @@ const Header = () => {
     currentUser,
     shoppingCart,
     setShowDrawer,
+    setFilter,
     setShowCart
   } = useContext(AppContext);
   const [loginModal, setLoginModal] = useState(false);
@@ -44,7 +45,13 @@ const Header = () => {
             <GiShoppingBag />
           </p>
           <div className="header-right-actions">
-            <li onClick={() => history.push('/shop')} className="pointer">
+            <li
+              onClick={() => {
+                setFilter('');
+                history.push('/shop');
+              }}
+              className="pointer"
+            >
               Shop
             </li>
             <NavDropdown

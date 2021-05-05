@@ -5,6 +5,7 @@ import { Field } from '../index';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import './CheckoutModal.scss';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 const CheckoutModal = (props) => {
   const {
@@ -102,6 +103,7 @@ const CheckoutModal = (props) => {
           }
         }
       );
+      swal('Thank you for your purchase!', 'Come back soon!');
       setLoading(false);
       setShoppingCart({});
       setPurchased(true);
