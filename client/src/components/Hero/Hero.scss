@@ -3,4 +3,14 @@
 .carousel-image {
   height: 600px;
   object-fit: contain;
+  display: block;
+  margin: 0 auto;
+
+  @include tablet {
+    width: 700px;
+  }
+
+  @include mobile {
+    width: 300px;
+  }
 }
