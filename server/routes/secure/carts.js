@@ -15,6 +15,6 @@ router.put('/:id', decrementCart);
 //cart for currentUser
 router.get('/', getCart);
 
-router.post('/remove', removeItemFromCart);
+router.post('/:id/remove', removeItemFromCart);
 
 module.exports = router;

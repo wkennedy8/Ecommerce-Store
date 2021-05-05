@@ -37,7 +37,6 @@ const dbReset = async () => {
       name: faker.commerce.productName(),
       price: faker.commerce.price(),
       description: faker.commerce.productDescription(),
-      quantity: 5,
       image: faker.image.imageUrl(),
       size: sizes[Math.floor(Math.random() * sizes.length)],
       categoryId:

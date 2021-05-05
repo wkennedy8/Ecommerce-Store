@@ -105,9 +105,9 @@ export const ContextProvider = ({ children }) => {
 
   const removeItemFromCart = async (product, cartId) => {
     try {
-      const { data } = await axios.put(
-        `/api/cart/remove`,
-        { product, cartId },
+      const { data } = await axios.post(
+        `/api/cart/${cartId}/remove`,
+        { product },
         {
           headers: {
             Authorization: `Bearer ${token}`

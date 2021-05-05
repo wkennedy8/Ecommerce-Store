@@ -9,6 +9,7 @@ import './CartDrawer.scss';
 import { Button } from 'react-bootstrap';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import axios from 'axios';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
@@ -20,8 +21,7 @@ const CartDrawer = () => {
     setShowCart,
     shoppingCart,
     currentUser,
-    purchased,
-    setPurchased
+    removeItemFromCart
   } = useContext(AppContext);
 
   const handleSelect = (productId) => {
@@ -102,7 +102,10 @@ const CartDrawer = () => {
                   {product.name}
                 </p>
 
-                <div className="cart-product-row--remove">
+                <div
+                  className="cart-product-row--remove pointer"
+                  onClick={() => removeItemFromCart(product, shoppingCart?._id)}
+                >
                   <GoTrashcan />
                 </div>
               </div>

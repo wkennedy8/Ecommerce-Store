@@ -135,14 +135,15 @@ exports.decrementCart = async (req, res) => {
 };
 
 exports.removeItemFromCart = async (req, res) => {
-  const { cartId, product } = req.body;
+  const { product } = req.body;
 
   try {
     const cart = await Cart.findOne({
-      _id: cartId,
+      _id: req.params.id,
       userId: req.user._id,
       isOpen: true
     });
+
     const itemIndex = cart.products.findIndex((p) => p._id == product._id);
     const productToRemove = cart.products[itemIndex];
     cart.products = cart.products.filter(
