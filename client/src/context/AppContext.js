@@ -14,6 +14,7 @@ export const ContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [purchased, setPurchased] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
+  const [showCart, setShowCart] = useState(false);
 
   const getCategories = async () => {
     const { data } = await axios.get('/api/categories');
@@ -141,7 +142,9 @@ export const ContextProvider = ({ children }) => {
         purchased,
         setPurchased,
         showDrawer,
-        setShowDrawer
+        setShowDrawer,
+        showCart,
+        setShowCart
       }}
     >
       {children}

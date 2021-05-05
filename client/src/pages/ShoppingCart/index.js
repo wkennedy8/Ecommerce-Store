@@ -4,10 +4,6 @@ import { AppContext } from '../../context/AppContext';
 import { CheckoutModal } from '../../components';
 import './ShoppingCart.scss';
 import { Button, Container } from 'react-bootstrap';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
-
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
 const ShoppingCart = ({ history }) => {
   const {
@@ -131,13 +127,6 @@ const ShoppingCart = ({ history }) => {
           </Button>
         </div>
       )}
-
-      <Elements stripe={stripePromise}>
-        <CheckoutModal
-          show={showCheckoutModal}
-          onHide={() => setShowCheckoutModal(false)}
-        />
-      </Elements>
     </Container>
   );
 };

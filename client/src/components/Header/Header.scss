@@ -14,8 +14,8 @@
   align-items: center;
   justify-content: center;
   height: 20px;
-  top: 11px;
-  right: 20px;
+  top: 0px;
+  right: -10px;
   text-align: center;
   transform: translate(10%, -30%);
 }
@@ -26,5 +26,11 @@
 }
 
 .hamburger {
+  cursor: pointer;
+}
+
+.nav-shop--icon {
+  margin-right: 10px;
+  font-size: 24px;
   cursor: pointer;
 }

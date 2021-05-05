@@ -8,6 +8,7 @@ import CheckoutModal from './CheckoutModal';
 import Field from './Field';
 import SideDrawer from './SideDrawer';
 import Footer from './Footer';
+import CartDrawer from './CartDrawer';
 
 export {
   Header,
@@ -19,5 +20,6 @@ export {
   Field,
   SignUpModal,
   SideDrawer,
-  Footer
+  Footer,
+  CartDrawer
 };

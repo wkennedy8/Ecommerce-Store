@@ -13,12 +13,11 @@ const Hero = () => {
   return (
     <Carousel indicators={false} controls={false}>
       {images.map((image, i) => (
-        <Carousel.Item>
+        <Carousel.Item key={i}>
           <img
             className="d-block w-100 carousel-image"
             src={image}
             alt={`sale-${i}`}
-            key={i}
           />
         </Carousel.Item>
       ))}

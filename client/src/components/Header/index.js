@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../../context/AppContext';
-import { GiHamburgerMenu } from 'react-icons/gi';
+import { GiHamburgerMenu, GiShoppingBag } from 'react-icons/gi';
 import { NavLink, useHistory } from 'react-router-dom';
 import './Header.scss';
 import { NavDropdown, Navbar, Nav } from 'react-bootstrap';
@@ -12,11 +12,13 @@ const Header = () => {
     setCurrentUser,
     currentUser,
     shoppingCart,
-    setShowDrawer
+    setShowDrawer,
+    setShowCart
   } = useContext(AppContext);
   const [loginModal, setLoginModal] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
 
+  console.log(shoppingCart);
   const handleLogout = () => {
     sessionStorage.clear();
     setCurrentUser('');
@@ -33,7 +35,15 @@ const Header = () => {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto">
+        <Nav className="ml-auto d-flex align-items-center">
+          <p
+            className="nav-shop--icon"
+            data-tooltip={(currentUser && shoppingCart.cartQuantity) || null}
+            onClick={() => setShowCart(true)}
+          >
+            <GiShoppingBag />
+          </p>
+
           <Nav.Link as={NavLink} to="/shop">
             Shop
           </Nav.Link>
@@ -54,22 +64,7 @@ const Header = () => {
                 </NavDropdown.Item>
               </>
             ) : (
-              <>
-                <NavDropdown.Item
-                  onClick={() => history.push('/cart')}
-                  data-tooltip={
-                    shoppingCart?.cartQuantity > 0
-                      ? shoppingCart?.cartQuantity
-                      : null
-                  }
-                >
-                  Cart
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item onClick={handleLogout}>
-                  Logout
-                </NavDropdown.Item>
-              </>
+              <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
             )}
           </NavDropdown>
         </Nav>
