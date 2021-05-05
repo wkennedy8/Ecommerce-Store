@@ -21,7 +21,7 @@
     "nodemon": "^2.0.7"
   },
   "scripts": {
-    "start": "nodemon server/index.js",
-    "seed": "node server/db/seeds/index"
+    "start": "nodemon ./server/index.js",
+    "seed": "node ./server/db/seeds/index"
   }
 }
