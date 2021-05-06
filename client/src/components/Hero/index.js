@@ -2,7 +2,8 @@ import React from 'react';
 import { Carousel } from 'react-bootstrap';
 import './Hero.scss';
 
-const SALE_IMG_1 = 'https://files.willkennedy.dev/mern_store/sale-image-1.jpeg';
+const SALE_IMG_1 =
+  'https://files.willkennedy.dev/mern_store/jakob-owens-JzJSybPFb3s-unsplash.jpg';
 const SALE_IMG_2 = 'https://files.willkennedy.dev/mern_store/sale-image-2.jpeg';
 const SALE_IMG_3 = 'https://files.willkennedy.dev/mern_store/sale-image-3.jpeg';
 const SALE_IMG_4 = 'https://files.willkennedy.dev/mern_store/sale-image-4.jpeg';

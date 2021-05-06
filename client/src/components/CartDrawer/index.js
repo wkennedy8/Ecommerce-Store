@@ -83,47 +83,54 @@ const CartDrawer = () => {
         />
         <div className="side-drawer">
           <h5>Your cart</h5>
-          {shoppingCart?.products?.map((product) => (
-            <div key={product.productId}>
-              <div className="cart-product-row">
-                <div className="cart-product-row--image">
-                  <img
-                    className="cart-product-row--image"
-                    src={product.image}
-                    alt={product.name}
-                  />
+          <div className="side-drawer-row-container">
+            {shoppingCart?.products?.map((product) => (
+              <div
+                key={product.productId}
+                className="cart-product-row-container"
+              >
+                <div className="cart-product-row">
+                  <div className="cart-product-row--image">
+                    <img
+                      className="cart-product-row--image"
+                      src={product.image}
+                      alt={product.name}
+                    />
+                  </div>
+
+                  <p
+                    className="cart-product-row--name"
+                    onClick={() => handleSelect(product.productId)}
+                  >
+                    {product.name}
+                  </p>
+
+                  <div
+                    className="cart-product-row--remove pointer"
+                    onClick={() =>
+                      removeItemFromCart(product, shoppingCart?._id)
+                    }
+                  >
+                    <GoTrashcan />
+                  </div>
                 </div>
-
-                <p
-                  className="cart-product-row--name"
-                  onClick={() => handleSelect(product.productId)}
-                >
-                  {product.name}
-                </p>
-
                 <div
-                  className="cart-product-row--remove pointer"
-                  onClick={() => removeItemFromCart(product, shoppingCart?._id)}
+                  style={{ width: '100%', marginTop: -50 }}
+                  className="d-flex justify-content-between"
                 >
-                  <GoTrashcan />
+                  <p>Quantity</p>
+                  <p>{product.quantity}</p>
+                </div>
+                <div
+                  style={{ width: '100%' }}
+                  className="d-flex justify-content-between"
+                >
+                  <p>Price</p>
+                  <p>${product.price.toFixed(2)}</p>
                 </div>
               </div>
-              <div
-                style={{ width: '100%', marginTop: -50 }}
-                className="d-flex justify-content-between"
-              >
-                <p>Quantity</p>
-                <p>{product.quantity}</p>
-              </div>
-              <div
-                style={{ width: '100%' }}
-                className="d-flex justify-content-between"
-              >
-                <p>Price</p>
-                <p>${product.price.toFixed(2)}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
           <Divider />
           <div className="cart-footer">
             <div
