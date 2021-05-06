@@ -31,3 +31,7 @@ The backend utilizes:
 - In the `client` directory, `yarn start`
 
 
+#### Demo
+
+Link to site: https://shop.willkennedy.dev
+![](https://files.willkennedy.dev/mern_store/ecommerce-snapshot.png)
