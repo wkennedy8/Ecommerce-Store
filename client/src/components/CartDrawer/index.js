@@ -10,7 +10,7 @@ import { Button } from 'react-bootstrap';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
+const stripePromise = loadStripe('pk_test_mIntaKnzcY7VnFGDTZa7fzpp00byScppBZ');
 
 const CartDrawer = () => {
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
@@ -20,7 +20,8 @@ const CartDrawer = () => {
     setShowCart,
     shoppingCart,
     currentUser,
-    removeItemFromCart
+    removeItemFromCart,
+    getStripeKey
   } = useContext(AppContext);
 
   const handleSelect = (productId) => {
