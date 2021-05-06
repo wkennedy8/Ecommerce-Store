@@ -52,8 +52,12 @@ export const ContextProvider = ({ children }) => {
     getCategories();
     getProducts();
 
-    if ((token && !currentUser) || (token && currentUser)) {
+    if (token && !currentUser) {
       getCurrentUser();
+      getCart();
+    }
+
+    if (token && currentUser) {
       getCart();
     }
 
