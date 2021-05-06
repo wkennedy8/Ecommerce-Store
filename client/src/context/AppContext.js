@@ -62,7 +62,7 @@ export const ContextProvider = ({ children }) => {
     }
 
     // eslint-disable-next-line
-  }, [currentUser]);
+  }, [currentUser, token]);
 
   const handleUpdateCart = async (product, quantity) => {
     setLoading(true);
