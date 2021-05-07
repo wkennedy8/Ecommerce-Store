@@ -34,9 +34,10 @@ const SideDrawer = () => {
   return (
     <>
       <Drawer open={showDrawer} onClose={() => setShowDrawer(false)}>
-        <div className="side-drawer" onClick={() => setShowDrawer(false)}>
+        <div className="left-side-drawer" onClick={() => setShowDrawer(false)}>
           <RiCloseLine className="side-drawer--close" />
           <h5>Shop by category</h5>
+
           {categories.map((category) => (
             <p
               className="side-drawer--item"
