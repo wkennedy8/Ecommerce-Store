@@ -127,6 +127,13 @@ const CartDrawer = () => {
                   style={{ width: '100%' }}
                   className="d-flex justify-content-between"
                 >
+                  <p>Size</p>
+                  <p>{product.size}</p>
+                </div>
+                <div
+                  style={{ width: '100%' }}
+                  className="d-flex justify-content-between"
+                >
                   <p>Price</p>
                   <p>${product.price.toFixed(2)}</p>
                 </div>
