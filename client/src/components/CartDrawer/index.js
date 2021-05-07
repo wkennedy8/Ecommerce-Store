@@ -20,8 +20,7 @@ const CartDrawer = () => {
     setShowCart,
     shoppingCart,
     currentUser,
-    removeItemFromCart,
-    getStripeKey
+    removeItemFromCart
   } = useContext(AppContext);
 
   const handleSelect = (productId) => {
@@ -58,10 +57,12 @@ const CartDrawer = () => {
           onClick={() => setShowCart(false)}
         />
         <div className="side-drawer">
-          <h4>Your cart</h4>
-          <h5 className="mt-4">
-            No items in your cart, please continue shopping!
-          </h5>
+          <div>
+            <h4 className="text-center">Your cart</h4>
+            <h5 className="mt-4">
+              No items in your cart, please continue shopping!
+            </h5>
+          </div>
         </div>
       </Drawer>
     );
